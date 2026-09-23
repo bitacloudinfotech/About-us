@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Toaster } from 'sonner';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
@@ -15,10 +15,10 @@ import FAQSection from './components/FAQSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import CookieConsent from './components/CookieConsent';
-import StickyContact from './components/StickyContact';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import StickyContact from './components/StickyContact';
 
-// Global scroll reveal observer
+// Optimized Global Scroll Reveal observer
 function useGlobalScrollReveal() {
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,10 +39,17 @@ function useGlobalScrollReveal() {
 
     observeElements();
 
-    const mutationObserver = new MutationObserver(() => observeElements());
+    // Use MutationObserver instead of polling interval
+    const mutationObserver = new MutationObserver(() => {
+      observeElements();
+    });
+
     mutationObserver.observe(document.body, { childList: true, subtree: true });
 
-    return () => { observer.disconnect(); mutationObserver.disconnect(); };
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 }
 
@@ -50,12 +57,17 @@ export default function App() {
   const [showPrivacy, setShowPrivacy] = useState(false);
   useGlobalScrollReveal();
 
-  const handleNavClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    const anchor = target.closest('a[href="#privacy-policy"]');
-    if (anchor) { e.preventDefault(); setShowPrivacy(true); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    const backAnchor = target.closest('a[href="#"]');
-    if (backAnchor && showPrivacy) { setShowPrivacy(false); }
+  const handleNavClick = (e) => {
+    const anchor = e.target.closest('a[href="#privacy-policy"]');
+    if (anchor) {
+      e.preventDefault();
+      setShowPrivacy(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    const backAnchor = e.target.closest('a[href="#"]');
+    if (backAnchor && showPrivacy) {
+      setShowPrivacy(false);
+    }
   };
 
   return (
@@ -66,59 +78,65 @@ export default function App() {
       <Navbar />
 
       {showPrivacy ? (
-        <main id="main-content" tabIndex={-1}>
+        <main id="main-content" tabIndex="-1">
           <PrivacyPolicy />
         </main>
       ) : (
-        <main id="main-content" tabIndex={-1}>
-          {/* 1. Hero — typewriter headline + animated orbs */}
+        <main id="main-content" tabIndex="-1">
+
+          {/* 1. Hero — 2-column enterprise layout with visual + clear value prop */}
           <HeroSection />
 
-          {/* 2. Stats — 4 animated count-up metrics */}
+          {/* 2. Stats — Verified client performance metrics */}
           <StatsBanner />
 
-          {/* 3. Certifications — 6 badge cards */}
+          {/* 3. Certifications — 100% certified team with live verification links */}
           <CertifiedTeamSection />
 
-          {/* 4. Services — 6 capability cards with modal */}
+          {/* 4. Platform / Services — 9 capabilities with Business Outcome callouts */}
           <PlatformGrid />
 
-          {/* 5. Process — 5-phase delivery */}
+          {/* 5. Process — 5-phase delivery methodology with mobile scroll */}
           <ProcessSection />
 
-          {/* 6. Pricing — 3 engagement tiers */}
+          {/* 7. Pricing — Transparent engagement models */}
           <PricingSection />
 
-          {/* 7. Why BITA — differentiators + switch reasons */}
+          {/* 8. Why BITA — Differentiators + authentic client switching reasons */}
           <WhyBITASection />
 
-          {/* 8. Industries — 6 verticals */}
+          {/* 9. Industries — 6 verticals with use-case examples */}
           <IndustriesSection />
 
-          {/* 9. Testimonials + Tech Marquee */}
+          {/* 10. Testimonials + Partners */}
           <TestimonialsPartners />
 
-          {/* 10. About + Careers */}
+          {/* 11. About + Careers */}
           <AboutSection />
 
-          {/* 11. FAQ */}
+          {/* 12. FAQ — 8 enterprise buyer questions */}
           <FAQSection />
 
-          {/* 12. Contact */}
+          {/* 13. Contact — Corporate form intake */}
           <ContactSection />
+
         </main>
       )}
 
       <Footer />
       <CookieConsent />
       <StickyContact />
-      <Toaster
-        position="top-right"
-        richColors
-        closeButton
+      <Toaster 
+        position="top-right" 
+        richColors 
+        closeButton 
         theme="system"
         toastOptions={{
-          style: { fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', borderRadius: '12px' }
+          style: {
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '0.85rem',
+            borderRadius: '12px',
+          }
         }}
       />
     </div>

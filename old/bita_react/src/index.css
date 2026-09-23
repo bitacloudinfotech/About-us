@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 /* ════════════════════════════════════════════════════
-   BITA CLOUD — ENTERPRISE DESIGN SYSTEM
+   BITA CLOUD — NEXT-LEVEL ENTERPRISE DESIGN SYSTEM
    Data & AI Platform · 2026
 ════════════════════════════════════════════════════ */
 
-/* ── MOTION TOKENS ── */
+/* ── MOTION TOKENS (Emil Kowalski & Apple Standards) ── */
 :root {
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);        /* Strong, instant ease-out for UI */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* Strong ease-in-out for moving on-screen */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);     /* iOS-style drawer & sheet curve */
   --duration-fast: 160ms;
   --duration-normal: 220ms;
   --duration-slow: 280ms;
@@ -123,18 +123,37 @@ body {
 }
 
 /* ═══ SCROLLBAR ═══ */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: rgba(0, 229, 255, 0.25); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 229, 255, 0.25);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
 
 /* ═══ TYPOGRAPHY ═══ */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Inter', 'Space Grotesk', sans-serif;
   color: var(--text-primary);
 }
 
-.font-mono { font-family: 'JetBrains Mono', 'Courier New', monospace !important; }
+.font-mono {
+  font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+}
 
 /* ═══ GRADIENT TEXT ═══ */
 .text-grad {
@@ -151,7 +170,9 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
 }
 
-.text-cyan { color: var(--accent-cyan) !important; }
+.text-cyan {
+  color: var(--accent-cyan) !important;
+}
 
 /* ═══ LAYOUT ═══ */
 .container {
@@ -160,13 +181,29 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 1.5rem;
 }
 
-@media(min-width:768px) { .container { padding: 0 2.5rem; } }
-@media(min-width:1280px) { .container { padding: 0 3rem; } }
+@media(min-width:768px) {
+  .container {
+    padding: 0 2.5rem;
+  }
+}
 
-.section-padding { padding: 110px 0; }
-@media(max-width:768px) { .section-padding { padding: 72px 0; } }
+@media(min-width:1280px) {
+  .container {
+    padding: 0 3rem;
+  }
+}
 
-/* ═══ MASTER CARD ═══ */
+.section-padding {
+  padding: 110px 0;
+}
+
+@media(max-width:768px) {
+  .section-padding {
+    padding: 72px 0;
+  }
+}
+
+/* ═══ MASTER CARD (Materials & Translucency) ═══ */
 .master-card {
   background: var(--bg-card);
   backdrop-filter: blur(24px) saturate(180%);
@@ -221,7 +258,7 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
 }
 
-/* ═══ BUTTONS ═══ */
+/* ═══ BUTTONS (Emil Kowalski :active scale(0.97) + Hardware Accelerated) ═══ */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -244,7 +281,9 @@ h1, h2, h3, h4, h5, h6 {
               box-shadow var(--duration-normal) var(--ease-out);
 }
 
-.btn-primary:active { transform: scale(0.97); }
+.btn-primary:active {
+  transform: scale(0.97);
+}
 
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover {
@@ -252,7 +291,9 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(-2px);
     box-shadow: 0 0 44px var(--accent-cyan-glow);
   }
-  .btn-primary:active { transform: scale(0.97) translateY(0); }
+  .btn-primary:active {
+    transform: scale(0.97) translateY(0);
+  }
 }
 
 .btn-outline {
@@ -276,7 +317,9 @@ h1, h2, h3, h4, h5, h6 {
               background-color var(--duration-normal) ease;
 }
 
-.btn-outline:active { transform: scale(0.97); }
+.btn-outline:active {
+  transform: scale(0.97);
+}
 
 @media (hover: hover) and (pointer: fine) {
   .btn-outline:hover {
@@ -285,7 +328,9 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--accent-cyan-dim);
     transform: translateY(-2px);
   }
-  .btn-outline:active { transform: scale(0.97) translateY(0); }
+  .btn-outline:active {
+    transform: scale(0.97) translateY(0);
+  }
 }
 
 .btn-ghost {
@@ -307,7 +352,9 @@ h1, h2, h3, h4, h5, h6 {
               background-color var(--duration-normal) ease;
 }
 
-.btn-ghost:active { transform: scale(0.97); }
+.btn-ghost:active {
+  transform: scale(0.97);
+}
 
 @media (hover: hover) and (pointer: fine) {
   .btn-ghost:hover {
@@ -336,7 +383,9 @@ h1, h2, h3, h4, h5, h6 {
               box-shadow var(--duration-normal) var(--ease-out);
 }
 
-.btn-whatsapp:active { transform: scale(0.97); }
+.btn-whatsapp:active {
+  transform: scale(0.97);
+}
 
 @media (hover: hover) and (pointer: fine) {
   .btn-whatsapp:hover {
@@ -344,7 +393,9 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(-2px);
     box-shadow: 0 6px 28px rgba(37, 211, 102, 0.38);
   }
-  .btn-whatsapp:active { transform: scale(0.97) translateY(0); }
+  .btn-whatsapp:active {
+    transform: scale(0.97) translateY(0);
+  }
 }
 
 /* ═══ BADGES ═══ */
@@ -378,7 +429,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.1em;
 }
 
-/* ═══ SECTION TYPOGRAPHY ═══ */
+/* ═══ SECTION TYPOGRAPHY (Apple Optical Hierarchy) ═══ */
 .section-title {
   font-size: clamp(2rem, 4vw, 3.2rem);
   font-weight: 300;
@@ -388,7 +439,9 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
-.section-title strong { font-weight: 800; }
+.section-title strong {
+  font-weight: 800;
+}
 
 .section-subtitle {
   color: var(--text-secondary);
@@ -413,13 +466,16 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
 }
 
-.form-input::placeholder { color: var(--text-muted); }
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
 .form-input:focus {
   border-color: var(--accent-cyan);
   box-shadow: 0 0 0 3px var(--accent-cyan-dim);
 }
 
-/* ═══ THEME TOGGLE ═══ */
+/* ═══ THEME TOGGLE (Spring-feel button) ═══ */
 .theme-toggle {
   display: flex;
   align-items: center;
@@ -439,7 +495,9 @@ h1, h2, h3, h4, h5, h6 {
   user-select: none;
 }
 
-.theme-toggle:active { transform: scale(0.92); }
+.theme-toggle:active {
+  transform: scale(0.92);
+}
 
 @media (hover: hover) and (pointer: fine) {
   .theme-toggle:hover {
@@ -463,20 +521,39 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .link-readmore:hover { color: var(--accent-cyan); gap: 0.75rem; }
+  .link-readmore:hover {
+    color: var(--accent-cyan);
+    gap: 0.75rem;
+  }
 }
 
-/* ═══ ACCESSIBILITY — REDUCED MOTION ═══ */
+/* ═══ ACCESSIBILITY — REDUCED MOTION (Emil & Apple Guidelines) ═══ */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .reveal { opacity: 1 !important; transform: none !important; transition: opacity 0.2s ease !important; }
-  .orb, .marquee-track { animation: none !important; transform: none !important; }
-  .btn-shimmer { animation: none !important; background: var(--accent-cyan) !important; }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: opacity 0.2s ease !important;
+  }
+
+  .orb,
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .btn-shimmer {
+    animation: none !important;
+    background: var(--accent-cyan) !important;
+  }
 }
 
 /* ═══ PROCESS SECTION MOBILE SCROLL ═══ */
@@ -488,28 +565,36 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* ═══ LG PROCESS GRID RESET ═══ */
 @media (min-width: 1024px) {
-  #process .snap-x > * { min-width: unset !important; width: unset !important; }
+  #process .snap-x > * {
+    min-width: unset !important;
+    width: unset !important;
+  }
 }
 
-/* ═══ PRICING CARD ═══ */
+/* ═══ PRICING CARD HIGHLIGHTED BORDER ═══ */
 #pricing article {
   transition: transform var(--duration-normal) var(--ease-out),
               box-shadow var(--duration-normal) var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  #pricing article:hover { transform: translateY(-4px); }
+  #pricing article:hover {
+    transform: translateY(-4px);
+  }
 }
 
-/* ═══ FAQ ACCORDION ═══ */
+/* ═══ FAQ ACCORDION (CSS Grid 0fr -> 1fr smooth transition) ═══ */
 .faq-accordion-body {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 220ms var(--ease-out);
 }
 
-.faq-accordion-body.open { grid-template-rows: 1fr; }
+.faq-accordion-body.open {
+  grid-template-rows: 1fr;
+}
 
 .faq-accordion-inner {
   overflow: hidden;
@@ -529,7 +614,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 6px;
 }
 
-/* ═══ MODAL ═══ */
+/* ═══ MODAL DIALOG TRANSITIONS (scale(0.96) entrance & exit) ═══ */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -551,11 +636,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes modalEnter {
-  from { transform: scale(0.96); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-/* ═══ NAV ═══ */
+/* ═══ FONT SIZES — Nav items refined ═══ */
 header nav a {
   font-size: 0.84rem;
   letter-spacing: 0.01em;
@@ -563,55 +654,109 @@ header nav a {
 
 /* ═══ ANIMATIONS ═══ */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes orb1 {
-  0%, 100% { transform: translate(0%, 0%) scale(1); }
-  33% { transform: translate(8%, -18%) scale(1.08); }
-  66% { transform: translate(-5%, 12%) scale(0.94); }
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  33% {
+    transform: translate(8%, -18%) scale(1.08);
+  }
+  66% {
+    transform: translate(-5%, 12%) scale(0.94);
+  }
 }
 
 @keyframes orb2 {
-  0%, 100% { transform: translate(0%, 0%) scale(1); }
-  33% { transform: translate(-10%, 16%) scale(1.06); }
-  66% { transform: translate(7%, -10%) scale(0.96); }
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  33% {
+    transform: translate(-10%, 16%) scale(1.06);
+  }
+  66% {
+    transform: translate(7%, -10%) scale(0.96);
+  }
 }
 
 @keyframes orb3 {
-  0%, 100% { transform: translate(0%, 0%) scale(1); }
-  50% { transform: translate(-6%, -14%) scale(1.1); }
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  50% {
+    transform: translate(-6%, -14%) scale(1.1);
+  }
 }
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 @keyframes pulse-ring {
-  0% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
-  70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
-  100% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+  0% {
+    transform: scale(0.96);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
+  }
+  100% {
+    transform: scale(0.96);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
 }
 
 @keyframes count-up {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.animate-fade-up { animation: fadeUp 0.35s var(--ease-out) forwards; }
-.animate-fade-in { animation: fadeIn 0.22s var(--ease-out) forwards; }
+.animate-fade-up {
+  animation: fadeUp 0.35s var(--ease-out) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.22s var(--ease-out) forwards;
+}
 
 /* Scroll-reveal utility */
 .reveal {
@@ -621,7 +766,10 @@ header nav a {
   will-change: opacity, transform;
 }
 
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 .reveal-delay-1 { transition-delay: 40ms; }
 .reveal-delay-2 { transition-delay: 80ms; }
@@ -637,7 +785,9 @@ header nav a {
   will-change: transform;
 }
 
-.marquee-track:hover { animation-play-state: paused; }
+.marquee-track:hover {
+  animation-play-state: paused;
+}
 
 /* ═══ SHIMMER BUTTON ═══ */
 .btn-shimmer {
