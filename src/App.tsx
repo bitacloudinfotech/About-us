@@ -71,41 +71,43 @@ export default function App() {
         </main>
       ) : (
         <main id="main-content" tabIndex={-1}>
-          {/* 1. Hero — typewriter headline + animated orbs */}
+          {/* 1. Hero — Mainframe full-screen interactive landing */}
           <HeroSection />
 
-          {/* 2. Stats — 4 animated count-up metrics */}
-          <StatsBanner />
+          <div className="relative z-[2]" style={{ background: 'var(--bg-primary)' }}>
+            {/* 2. Stats — 4 animated count-up metrics */}
+            <StatsBanner />
 
-          {/* 3. Certifications — 6 badge cards */}
-          <CertifiedTeamSection />
+            {/* 3. Certifications — 6 badge cards */}
+            <CertifiedTeamSection />
 
-          {/* 4. Services — 6 capability cards with modal */}
-          <PlatformGrid />
+            {/* 4. Services — 6 capability cards with modal */}
+            <PlatformGrid />
 
-          {/* 5. Process — 5-phase delivery */}
-          <ProcessSection />
+            {/* 5. Process — 5-phase delivery */}
+            <ProcessSection />
 
-          {/* 6. Pricing — 3 engagement tiers */}
-          <PricingSection />
+            {/* 6. Pricing — 3 engagement tiers */}
+            <PricingSection />
 
-          {/* 7. Why BITA — differentiators + switch reasons */}
-          <WhyBITASection />
+            {/* 7. Why BITA — differentiators + switch reasons */}
+            <WhyBITASection />
 
-          {/* 8. Industries — 6 verticals */}
-          <IndustriesSection />
+            {/* 8. Industries — 6 verticals */}
+            <IndustriesSection />
 
-          {/* 9. Testimonials + Tech Marquee */}
-          <TestimonialsPartners />
+            {/* 9. Testimonials + Tech Marquee */}
+            <TestimonialsPartners />
 
-          {/* 10. About + Careers */}
-          <AboutSection />
+            {/* 10. About + Careers */}
+            <AboutSection />
 
-          {/* 11. FAQ */}
-          <FAQSection />
+            {/* 11. FAQ */}
+            <FAQSection />
 
-          {/* 12. Contact */}
-          <ContactSection />
+            {/* 12. Contact */}
+            <ContactSection />
+          </div>
         </main>
       )}
 

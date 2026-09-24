@@ -9,14 +9,25 @@
    Data & AI Platform · 2026
 ════════════════════════════════════════════════════ */
 
-/* ── MOTION TOKENS ── */
+/* ── FONTS & TOKENS ── */
 :root {
+  --font-heading: 'HelveticaNowDisplay-Medium', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'HelveticaNowDisplayW01-Rg', 'Helvetica Neue', Arial, sans-serif;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --duration-fast: 160ms;
   --duration-normal: 220ms;
   --duration-slow: 280ms;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 /* ── DARK THEME (Default) ── */

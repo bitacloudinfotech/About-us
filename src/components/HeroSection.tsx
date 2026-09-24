@@ -1,130 +1,314 @@
-import { useState, useEffect } from 'react';
-import { CalendarCheck, ChevronRight } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 
-const HEADLINES = [
-  'Azure Data Team',
-  'Fabric Lakehouse Experts',
-  'Power BI Analytics Team',
-  'dbt Transformation Team',
-  'Enterprise AI Engineers',
-];
-
-function TypewriterText({ words }: { words: string[] }) {
-  const [index, setIndex] = useState(0);
+// Custom useTypewriter hook as specified:
+// takes text, speed (default 38ms), startDelay (default 600ms)
+// reveals one character at a time after startDelay
+function useTypewriter(text: string, speed = 38, startDelay = 600) {
   const [displayed, setDisplayed] = useState('');
-  const [deleting, setDeleting] = useState(false);
-  const [pause, setPause] = useState(false);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
-    if (pause) {
-      const t = setTimeout(() => setPause(false), 1600);
-      return () => clearTimeout(t);
-    }
-    const current = words[index];
-    if (!deleting && displayed === current) { setPause(true); setDeleting(true); return; }
-    if (deleting && displayed === '') { setDeleting(false); setIndex((i) => (i + 1) % words.length); return; }
-    const speed = deleting ? 38 : 62;
-    const t = setTimeout(() => {
-      setDisplayed(deleting ? current.slice(0, displayed.length - 1) : current.slice(0, displayed.length + 1));
-    }, speed);
-    return () => clearTimeout(t);
-  }, [displayed, deleting, index, pause, words]);
+    let index = 0;
+    let intervalId: any = null;
 
-  return (
-    <span className="text-grad" aria-live="polite" aria-label={words[index]}>
-      {displayed}
-      <span aria-hidden="true" style={{ display: 'inline-block', width: '3px', height: '0.85em', background: 'var(--accent-cyan)', marginLeft: '3px', verticalAlign: 'middle', borderRadius: '2px', animation: 'fadeIn 0.5s ease infinite alternate' }} />
-    </span>
-  );
+    const startTimer = setTimeout(() => {
+      intervalId = setInterval(() => {
+        index++;
+        setDisplayed(text.slice(0, index));
+        if (index >= text.length) {
+          clearInterval(intervalId);
+          setDone(true);
+        }
+      }, speed);
+    }, startDelay);
+
+    return () => {
+      clearTimeout(startTimer);
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [text, speed, startDelay]);
+
+  return { displayed, done };
 }
 
 export default function HeroSection() {
-  const techBar = [
-    { src: '/About-us/assets/tech/azure.svg', alt: 'Azure' },
-    { src: '/About-us/assets/tech/fabric.svg', alt: 'Fabric' },
-    { src: '/About-us/assets/tech/powerbi.svg', alt: 'Power BI' },
-    { src: '/About-us/assets/tech/databricks.svg', alt: 'Databricks' },
-    { src: '/About-us/assets/tech/dbt.png', alt: 'dbt' },
-    { src: '/About-us/assets/tech/openai.svg', alt: 'OpenAI' },
-    { src: '/About-us/assets/tech/sql.svg', alt: 'SQL Server' },
-  ];
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const prevX = useRef<number | null>(null);
+  const isSeeking = useRef(false);
+  const pendingSeek = useRef<number | null>(null);
+
+  const [buttonsVisible, setButtonsVisible] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  // Typewriter text
+  const typewriterText = "Glad you stopped in. Good taste tends to find us. Now, what are we building?";
+  const { displayed, done } = useTypewriter(typewriterText, 38, 600);
+
+  // Buttons become visible 400ms after page load, independent of typewriter
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setButtonsVisible(true);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Mouse-scrub controlled video logic:
+  // (delta / window.innerWidth) * SENSITIVITY * video.duration where SENSITIVITY = 0.8
+  useEffect(() => {
+    const SENSITIVITY = 0.8;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const video = videoRef.current;
+      if (!video || !video.duration || isNaN(video.duration)) return;
+
+      if (prevX.current === null) {
+        prevX.current = e.clientX;
+        return;
+      }
+
+      const delta = e.clientX - prevX.current;
+      prevX.current = e.clientX;
+
+      const timeOffset = (delta / window.innerWidth) * SENSITIVITY * video.duration;
+      const targetTime = Math.max(0, Math.min(video.duration, video.currentTime + timeOffset));
+
+      if (isSeeking.current) {
+        pendingSeek.current = targetTime;
+      } else {
+        isSeeking.current = true;
+        video.currentTime = targetTime;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const video = videoRef.current;
+      if (!video || !video.duration || isNaN(video.duration)) return;
+      const clientX = e.touches[0]?.clientX;
+      if (clientX === undefined) return;
+
+      if (prevX.current === null) {
+        prevX.current = clientX;
+        return;
+      }
+
+      const delta = clientX - prevX.current;
+      prevX.current = clientX;
+
+      const timeOffset = (delta / window.innerWidth) * SENSITIVITY * video.duration;
+      const targetTime = Math.max(0, Math.min(video.duration, video.currentTime + timeOffset));
+
+      if (isSeeking.current) {
+        pendingSeek.current = targetTime;
+      } else {
+        isSeeking.current = true;
+        video.currentTime = targetTime;
+      }
+    };
+
+    const resetPointer = () => {
+      prevX.current = null;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', resetPointer);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', resetPointer);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', resetPointer);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', resetPointer);
+    };
+  }, []);
+
+  const handleSeeked = () => {
+    isSeeking.current = false;
+    if (pendingSeek.current !== null) {
+      const nextTarget = pendingSeek.current;
+      pendingSeek.current = null;
+      if (videoRef.current) {
+        isSeeking.current = true;
+        videoRef.current.currentTime = nextTarget;
+      }
+    }
+  };
+
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const email = 'hello@mainframe.co';
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(email).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2200);
+      });
+    }
+  };
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
-    <section id="hero" aria-labelledby="hero-headline" className="relative min-h-screen flex items-center overflow-hidden" style={{ paddingTop: '80px', background: 'var(--bg-primary)' }}>
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="orb" style={{ width: '600px', height: '600px', top: '-100px', left: '-150px', background: 'radial-gradient(circle, rgba(0,229,255,0.18) 0%, transparent 70%)', animation: 'orb1 18s ease-in-out infinite' }} />
-        <div className="orb" style={{ width: '700px', height: '700px', top: '10%', right: '-200px', background: 'radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 70%)', animation: 'orb2 22s ease-in-out infinite' }} />
-        <div className="orb" style={{ width: '400px', height: '400px', bottom: '5%', left: '35%', background: 'radial-gradient(circle, rgba(217,70,239,0.10) 0%, transparent 70%)', animation: 'orb3 15s ease-in-out infinite' }} />
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px)`, backgroundSize: '72px 72px', maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)' }} />
-      </div>
+    <>
+      {/* Background Video (mouse-scrub controlled) */}
+      <video
+        ref={videoRef}
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_041744_63efcd78-bf7d-4039-99e2-2461e8a61903.mp4"
+        muted
+        playsInline
+        preload="auto"
+        onSeeked={handleSeeked}
+        className="fixed inset-0 z-0 w-full h-full object-cover pointer-events-none"
+        style={{ objectPosition: '70% center' }}
+      />
 
-      <div className="container relative z-10 py-24 lg:py-36">
-        <div className="max-w-4xl space-y-8">
-          <div className="section-badge w-fit animate-fade-up" style={{ animationDelay: '0.1s' }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" aria-hidden="true" />
-            Certified Data &amp; AI Engineering — India · Global
+      {/* Hero Section (z-index: 1) */}
+      <section
+        id="hero"
+        aria-label="Mainframe Hero"
+        className="relative z-[1] w-full h-screen flex flex-col justify-end pb-12 md:justify-center md:pb-0 px-5 sm:px-8 md:px-10 overflow-hidden"
+        style={{ fontFamily: 'var(--font-body)' }}
+      >
+        {/* Content Container (max-w-xl, relative z-10) */}
+        <div className="max-w-xl relative z-10">
+          {/* 1. Blurred intro label */}
+          <div
+            className="pointer-events-none select-none mb-5 sm:mb-6 text-white"
+            style={{
+              fontSize: 'clamp(18px, 4vw, 26px)',
+              lineHeight: 1.3,
+              fontWeight: 400,
+              filter: 'blur(4px)',
+            }}
+          >
+            Hey there, meet A.R.I.A,
+            <br />
+            Mainframe's Adaptive Response Interface Agent
           </div>
 
-          <div className="space-y-2" style={{ animationDelay: '0.2s' }}>
-            <h1 id="hero-headline" style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.5rem)', fontWeight: 800, lineHeight: 1.06, letterSpacing: '-0.04em', color: 'var(--text-primary)' }}>
-              Your Certified
-            </h1>
-            <div style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.5rem)', fontWeight: 800, lineHeight: 1.06, letterSpacing: '-0.04em', minHeight: '1.15em' }}>
-              <TypewriterText words={HEADLINES} />
-            </div>
-            <p style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 300, letterSpacing: '-0.025em', color: 'var(--text-secondary)', lineHeight: 1.2, marginTop: '0.25rem' }}>
-              Production-Proven. Always On.
-            </p>
-          </div>
-
-          <p className="section-subtitle animate-fade-up" style={{ animationDelay: '0.35s', fontSize: '1.1rem', maxWidth: '580px' }}>
-            We build <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>automated pipelines</strong>, <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Fabric lakehouses</strong>, and <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>AI agents</strong> for enterprises — without the bloated agency overhead.
+          {/* 2. Typewriter text */}
+          <p
+            className="text-white mb-5 sm:mb-6"
+            style={{
+              fontSize: 'clamp(18px, 4vw, 26px)',
+              lineHeight: 1.35,
+              fontWeight: 400,
+              minHeight: '54px',
+            }}
+          >
+            {displayed}
+            {!done && (
+              <span
+                className="inline-block w-[2px] h-[1.1em] bg-white align-middle ml-[2px]"
+                style={{ animation: 'blink 1s step-end infinite' }}
+                aria-hidden="true"
+              />
+            )}
           </p>
 
-          <div className="flex flex-wrap items-center gap-5 animate-fade-up" style={{ animationDelay: '0.45s' }}>
+          {/* 3. Action pill buttons (fade-in + slide-up 400ms after page load) */}
+          <div
+            className="flex flex-wrap gap-y-1 transition-all duration-400 ease-out"
+            style={{
+              opacity: buttonsVisible ? 1 : 0,
+              transform: buttonsVisible ? 'translateY(0)' : 'translateY(8px)',
+              transition: 'opacity 0.4s ease, transform 0.4s ease',
+            }}
+          >
+            {/* 4 white pill buttons */}
+            <button
+              type="button"
+              onClick={() => scrollToSection('contact')}
+              className="inline-flex items-center justify-center bg-white text-black border border-black/10 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer"
+            >
+              Pitch us an idea
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollToSection('about')}
+              className="inline-flex items-center justify-center bg-white text-black border border-black/10 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer"
+            >
+              Come work here
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollToSection('contact')}
+              className="inline-flex items-center justify-center bg-white text-black border border-black/10 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer"
+            >
+              Send a brief hello
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollToSection('process')}
+              className="inline-flex items-center justify-center bg-white text-black border border-black/10 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer"
+            >
+              See how we operate
+            </button>
+
+            {/* 1 outline pill button (copies email to clipboard) */}
+            <button
+              type="button"
+              onClick={handleCopyEmail}
+              aria-label="Copy email address"
+              className="text-white bg-transparent border border-white rounded-full inline-flex items-center justify-center text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] gap-2 sm:gap-3 whitespace-nowrap hover:bg-white hover:text-black transition-colors duration-200 cursor-pointer group"
+            >
+              <span>
+                Reach us:{' '}
+                <span className="underline underline-offset-1">
+                  {copied ? 'Copied to clipboard!' : 'hello@mainframe.co'}
+                </span>
+              </span>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="shrink-0"
+                aria-hidden="true"
+              >
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Website KPIs (added per requirement: "add my website kpi like heading menu or more") */}
+          <div
+            className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-white/10 transition-all duration-500"
+            style={{
+              opacity: buttonsVisible ? 1 : 0,
+              transform: buttonsVisible ? 'translateY(0)' : 'translateY(6px)',
+              transition: 'opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s',
+            }}
+          >
             {[
-              { dot: '#22c55e', label: '6 Active Certifications' },
-              { dot: 'var(--accent-cyan)', label: '350M+ Records/Day' },
-              { dot: 'var(--accent-magenta)', label: 'Fortune 500 Clients' },
-            ].map((item) => (
-              <div key={item.label} className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full shrink-0" style={{ background: item.dot, boxShadow: `0 0 7px ${item.dot}` }} aria-hidden="true" />
-                <span className="text-xs font-semibold" style={{ color: 'var(--text-muted)', fontFamily: 'JetBrains Mono, monospace' }}>{item.label}</span>
-              </div>
+              '6 Active Certifications',
+              '350M+ Records/Day',
+              '99.9% Pipeline SLA',
+              'Fortune 500 Trusted',
+            ].map((kpi) => (
+              <span
+                key={kpi}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs text-white/80 bg-white/5 border border-white/10 backdrop-blur-sm"
+              >
+                <span className="text-[10px] text-white">✦</span>
+                {kpi}
+              </span>
             ))}
           </div>
-
-          <div className="flex flex-wrap items-center gap-3 animate-fade-up" style={{ animationDelay: '0.55s' }}>
-            <a href="#contact" className="btn-primary btn-shimmer" aria-label="Book a free enterprise consultation">
-              <CalendarCheck size={17} aria-hidden="true" />
-              <span>Book Free Consultation</span>
-            </a>
-            <a href="#services" className="btn-outline" aria-label="Explore our data and AI capabilities">
-              <span>Explore Capabilities</span>
-              <ChevronRight size={16} aria-hidden="true" />
-            </a>
-          </div>
-
-          <div className="animate-fade-up" style={{ animationDelay: '0.65s', paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }}>
-            <p className="text-xs mb-4 font-bold uppercase tracking-widest" style={{ color: 'var(--text-muted)', fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.2em' }}>
-              Our Core Stack
-            </p>
-            <div className="flex flex-wrap items-center gap-3" role="list" aria-label="Technology stack">
-              {techBar.map((t) => (
-                <div key={t.alt} role="listitem" className="group flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-200"
-                  style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-medium)', cursor: 'default' }}
-                  onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--border-strong)')}
-                  onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border-medium)')}>
-                  <img src={t.src} alt={t.alt} className="w-5 h-5 object-contain" loading="lazy" width="20" height="20" />
-                  <span className="text-xs font-semibold hidden sm:block" style={{ color: 'var(--text-secondary)' }}>{t.alt}</span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10" aria-hidden="true" style={{ background: 'linear-gradient(to bottom, transparent, var(--bg-primary))' }} />
-    </section>
+      </section>
+    </>
   );
 }
