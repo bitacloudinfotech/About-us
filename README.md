@@ -16,7 +16,6 @@ Official website for **BITA CLOUD INFO TECH**, a certified Azure Data & AI Engin
 - **100% Certified Team Badges**: 6 verified credentials from Microsoft, Databricks, and Palantir with 3D tilt hover and glowing auras.
 - **Enterprise Capabilities & Specs**: Deep-dive modals with specification copy capability across Fabric, ADF, Databricks, Power BI, dbt, and OpenAI GPT-4o.
 - **Verified Enterprise Milestones**: Accordion cards showcasing client outcomes across logistics, fintech, and healthcare.
-- **Transparent Engagement Pricing**: Fixed-Scope Sprint, Monthly Dedicated Retainer, and Enterprise Transformation tiers.
 - **Instant WhatsApp & Project Brief**: Direct consultation pipeline connecting engineering leadership in under 2 business hours.
 
 ---
