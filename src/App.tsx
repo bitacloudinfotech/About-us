@@ -1,128 +1,140 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Toaster } from 'sonner';
-import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import StatsBanner from './components/StatsBanner';
-import CertifiedTeamSection from './components/CertifiedTeamSection';
-import PlatformGrid from './components/PlatformGrid';
-import ProcessSection from './components/ProcessSection';
-import PricingSection from './components/PricingSection';
-import WhyBITASection from './components/WhyBITASection';
-import IndustriesSection from './components/IndustriesSection';
-import TestimonialsPartners from './components/TestimonialsPartners';
-import AboutSection from './components/AboutSection';
-import FAQSection from './components/FAQSection';
-import ContactSection from './components/ContactSection';
-import Footer from './components/Footer';
-import CookieConsent from './components/CookieConsent';
-import StickyContact from './components/StickyContact';
+import { AppleNavbar } from './components/AppleNavbar';
+import { AppleHero } from './components/AppleHero';
+import { AppleHighlights } from './components/AppleHighlights';
+import { Apple3DShowcase } from './components/Apple3DShowcase';
+import { AppleChipArchitecture } from './components/AppleChipArchitecture';
+import { ApplePerformanceSlider } from './components/ApplePerformanceSlider';
+import { AppleBadgesGallery } from './components/AppleBadgesGallery';
+import { AppleCapabilities } from './components/AppleCapabilities';
+import { AppleExperienceTimeline } from './components/AppleExperienceTimeline';
+import { AppleIndustries } from './components/AppleIndustries';
+import { AppleProcess } from './components/AppleProcess';
+import { AppleTechSpecs } from './components/AppleTechSpecs';
+import { AppleFAQ } from './components/AppleFAQ';
+import { AppleContact } from './components/AppleContact';
+import { AppleFooter } from './components/AppleFooter';
 import PrivacyPolicy from './components/PrivacyPolicy';
 
-// Global scroll reveal observer
-function useGlobalScrollReveal() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
-    );
+export const App: React.FC = () => {
+  const [currentTheme, setCurrentTheme] = useState<string>('black');
+  const [showPrivacy, setShowPrivacy] = useState<boolean>(false);
 
-    const observeElements = () => {
-      document.querySelectorAll('.reveal:not(.visible)').forEach((el) => observer.observe(el));
-    };
-
-    observeElements();
-
-    const mutationObserver = new MutationObserver(() => observeElements());
-    mutationObserver.observe(document.body, { childList: true, subtree: true });
-
-    return () => { observer.disconnect(); mutationObserver.disconnect(); };
-  }, []);
-}
-
-export default function App() {
-  const [showPrivacy, setShowPrivacy] = useState(false);
-  useGlobalScrollReveal();
-
-  const handleNavClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    const anchor = target.closest('a[href="#privacy-policy"]');
-    if (anchor) { e.preventDefault(); setShowPrivacy(true); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    const backAnchor = target.closest('a[href="#"]');
-    if (backAnchor && showPrivacy) { setShowPrivacy(false); }
+  const handleNavigate = (sectionId: string) => {
+    if (showPrivacy) {
+      setShowPrivacy(false);
+    }
+    if (sectionId === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   return (
     <div
-      style={{ minHeight: '100vh', background: 'var(--bg-primary)', color: 'var(--text-primary)', overflowX: 'hidden' }}
-      onClick={handleNavClick}
+      data-theme={currentTheme}
+      className="min-h-screen bg-black text-[#f5f5f7] selection:bg-cyan-500/30 selection:text-white relative"
     >
-      <Navbar />
+      {/* Apple Blurred Sticky Navbar */}
+      <AppleNavbar
+        currentTheme={currentTheme}
+        onThemeChange={setCurrentTheme}
+        onNavigate={handleNavigate}
+      />
 
       {showPrivacy ? (
-        <main id="main-content" tabIndex={-1}>
+        <main className="max-w-4xl mx-auto px-6 py-16">
+          <button
+            onClick={() => setShowPrivacy(false)}
+            className="mb-8 px-4 py-2 rounded-full apple-glass text-xs font-semibold text-cyan-400 hover:text-white transition-colors cursor-pointer"
+          >
+            ← Back to Main Website
+          </button>
           <PrivacyPolicy />
         </main>
       ) : (
-        <main id="main-content" tabIndex={-1}>
-          {/* 1. Hero — Mainframe full-screen interactive landing */}
-          <HeroSection />
+        /* Main Content Layout */
+        <main id="main-content">
+          {/* 1. Hero Section with Looping Background Video */}
+          <AppleHero
+            onExplore={() => handleNavigate('architecture')}
+            onSpecs={() => handleNavigate('specs')}
+          />
 
-          <div className="relative z-[2]" style={{ background: 'var(--bg-primary)' }}>
-            {/* 2. Stats — 4 animated count-up metrics */}
-            <StatsBanner />
+          {/* 2. Core Highlights Bento Grid */}
+          <AppleHighlights />
 
-            {/* 3. Certifications — 6 badge cards */}
-            <CertifiedTeamSection />
+          {/* 3. 3D Interactive Data Mesh & Identity Showcase */}
+          <Apple3DShowcase
+            currentTheme={currentTheme}
+            onThemeChange={setCurrentTheme}
+          />
 
-            {/* 4. Services — 6 capability cards with modal */}
-            <PlatformGrid />
+          {/* 4. Azure Data & AI Architecture Visualizer */}
+          <AppleChipArchitecture />
 
-            {/* 5. Process — 5-phase delivery */}
-            <ProcessSection />
+          {/* 5. Performance Speed Slider & Benchmarks */}
+          <ApplePerformanceSlider />
 
-            {/* 6. Pricing — 3 engagement tiers */}
-            <PricingSection />
+          {/* 6. 100% Certified Developer Teams Badges Gallery */}
+          <AppleBadgesGallery />
 
-            {/* 7. Why BITA — differentiators + switch reasons */}
-            <WhyBITASection />
+          {/* 7. Enterprise Capabilities & Specification Dialogs */}
+          <AppleCapabilities />
 
-            {/* 8. Industries — 6 verticals */}
-            <IndustriesSection />
+          {/* 8. Enterprise Milestones Timeline & Client Proof */}
+          <AppleExperienceTimeline />
 
-            {/* 9. Testimonials + Tech Marquee */}
-            <TestimonialsPartners />
+          {/* 9. Industry Verticals Matrix */}
+          <AppleIndustries />
 
-            {/* 10. About + Careers */}
-            <AboutSection />
+          {/* 10. 5-Phase Delivery Process */}
+          <AppleProcess />
 
-            {/* 11. FAQ */}
-            <FAQSection />
+          {/* 11. Technical Specifications & Engagement Tiers */}
+          <AppleTechSpecs />
 
-            {/* 12. Contact */}
-            <ContactSection />
-          </div>
+          {/* 12. Enterprise FAQs */}
+          <AppleFAQ />
+
+          {/* 13. Corporate Contact & Project Brief Submission */}
+          <AppleContact />
         </main>
       )}
 
-      <Footer />
-      <CookieConsent />
-      <StickyContact />
+      {/* Apple Footer & Sticky Floating Bottom Action Bar */}
+      <AppleFooter
+        onBackToTop={() => handleNavigate('top')}
+        onOpenPrivacy={() => {
+          setShowPrivacy(true);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
+
+      {/* Toaster for Sonner Notifications */}
       <Toaster
         position="top-right"
         richColors
         closeButton
-        theme="system"
+        theme="dark"
         toastOptions={{
-          style: { fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', borderRadius: '12px' }
+          style: {
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '0.85rem',
+            borderRadius: '16px',
+            background: 'rgba(18, 18, 20, 0.95)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(20px)',
+          },
         }}
       />
     </div>
   );
-}
+};
+
+export default App;

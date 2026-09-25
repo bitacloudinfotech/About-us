@@ -1,132 +1,114 @@
-# BITA CLOUD INFO TECH — Company Portfolio Website
+# BITA CLOUD INFO TECH — Enterprise Azure Data & AI Engineering
 
-Official company portfolio for **BITA CLOUD INFO TECH**, a certified Azure Data & AI Engineering firm.
+Official website for **BITA CLOUD INFO TECH**, a certified Azure Data & AI Engineering firm architecting Medallion lakehouses, Microsoft Fabric pipelines, PySpark distributed compute, and autonomous AI agents.
 
 🌐 **Live Site:** [https://bitacloudinfotech.github.io/About-us/](https://bitacloudinfotech.github.io/About-us/)
 
 ---
 
-## Tech Stack
+## 🚀 Design & Architectural Features
+
+- **Apple Pro Aesthetics**: Glassmorphic liquid cards, titanium & dark mode theme switcher, SF Pro & Inter typography, backdrop blurs, and micro-interactions.
+- **Dynamic Themes**: Dark Mode (Default), Silver Titanium, Ocean Blue, and Amber Gold.
+- **Interactive 3D WebGL Mesh**: Three.js cybernetic data mesh with cursor parallax and page-scroll response, toggleable with official BITA corporate emblem.
+- **Azure & Medallion Architecture Visualizer**: Interactive diagram across Bronze (ADF Ingest), Silver (Curated PySpark & dbt), Central Engine (Fabric OneLake & Databricks), Gold (Power BI DAX), and GenAI (Agentic RAG).
+- **Interactive Performance Slider**: Drag slider demonstrating 75% runtime reduction from legacy ETL to PySpark Delta Lake optimization.
+- **100% Certified Team Badges**: 6 verified credentials from Microsoft, Databricks, and Palantir with 3D tilt hover and glowing auras.
+- **Enterprise Capabilities & Specs**: Deep-dive modals with specification copy capability across Fabric, ADF, Databricks, Power BI, dbt, and OpenAI GPT-4o.
+- **Verified Enterprise Milestones**: Accordion cards showcasing client outcomes across logistics, fintech, and healthcare.
+- **Transparent Engagement Pricing**: Fixed-Scope Sprint, Monthly Dedicated Retainer, and Enterprise Transformation tiers.
+- **Instant WhatsApp & Project Brief**: Direct consultation pipeline connecting engineering leadership in under 2 business hours.
+
+---
+
+## 🛠 Tech Stack
 
 | Tool | Purpose |
 |---|---|
-| [React 19](https://react.dev/) | UI framework |
-| [TypeScript](https://www.typescriptlang.org/) | Type safety |
-| [Vite 8](https://vitejs.dev/) | Build tool & dev server |
-| [Lucide React](https://lucide.dev/) | Icon library |
-| [Sonner](https://sonner.emilkowal.ski/) | Toast notifications |
-| Vanilla CSS | Custom design system (dark/light theme) |
+| [React 19](https://react.dev/) | Modern UI Framework |
+| [TypeScript](https://www.typescriptlang.org/) | Type Safety |
+| [Vite 8](https://vitejs.dev/) | High-speed Build Tool & Dev Server |
+| [Three.js](https://threejs.org/) | WebGL 3D Interactive Data Mesh |
+| [Tailwind CSS 3](https://tailwindcss.com/) | Apple Pro Design System & Tokens |
+| [Lucide React](https://lucide.dev/) | Icon System |
+| [Sonner](https://sonner.emilkowal.ski/) | Apple Glass Toast Notifications |
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 About-us/
-├── public/                     # Static assets served at root
+├── public/
 │   ├── Bitacloudinfotechtransparent.png   # Company logo
 │   ├── android-chrome-192x192.png         # Favicon
-│   ├── assets/
-│   │   └── tech/               # Technology stack SVG icons
-│   │       ├── azure.svg
-│   │       ├── databricks.svg
-│   │       ├── dbt.png
-│   │       ├── fabric.svg
-│   │       ├── openai.svg
-│   │       ├── powerbi.svg
-│   │       └── sql.svg
-│   └── badges/                 # Certification badge SVGs (1.svg – 6.svg)
+│   ├── assets/tech/                       # Tech logos (Azure, Fabric, Databricks, etc.)
+│   └── badges/                            # 6 Certification badges (1.svg – 6.svg)
 │
 ├── src/
-│   ├── components/             # All page sections
-│   │   ├── Navbar.tsx          # Sticky nav with theme toggle + mobile drawer
-│   │   ├── HeroSection.tsx     # Typewriter headline + animated orbs
-│   │   ├── StatsBanner.tsx     # Animated count-up metrics
-│   │   ├── CertifiedTeamSection.tsx  # 6 certification badge cards
-│   │   ├── PlatformGrid.tsx    # 6 service cards + filter tabs + modal
-│   │   ├── ProcessSection.tsx  # 5-phase delivery methodology
-│   │   ├── PricingSection.tsx  # 3 engagement tiers
-│   │   ├── WhyBITASection.tsx  # Differentiators + client switch reasons
-│   │   ├── IndustriesSection.tsx   # 6 industry verticals
-│   │   ├── TestimonialsPartners.tsx # Tech marquee + testimonials
-│   │   ├── AboutSection.tsx    # About + careers card
-│   │   ├── FAQSection.tsx      # 8-question accordion
-│   │   ├── ContactSection.tsx  # Form + WhatsApp + contact cards
-│   │   ├── Footer.tsx          # 4-column footer
-│   │   ├── CookieConsent.tsx   # GDPR cookie banner
-│   │   ├── StickyContact.tsx   # Floating WhatsApp + scroll-to-top
-│   │   └── PrivacyPolicy.tsx   # Legal privacy page
-│   ├── App.tsx                 # Root layout + scroll reveal
-│   ├── index.css               # BITA design system (CSS variables, tokens)
-│   └── main.tsx                # React entry point
+│   ├── components/
+│   │   ├── AppleNavbar.tsx                # Apple sticky blurred navbar with theme dropdown
+│   │   ├── AppleHero.tsx                  # Video hero with CTA buttons & trust metrics
+│   │   ├── AppleHighlights.tsx            # Bento grid with 4 core metrics
+│   │   ├── Apple3DShowcase.tsx            # Three.js 3D data mesh & logo toggle
+│   │   ├── Avatar3D.tsx                   # Three.js WebGL canvas implementation
+│   │   ├── BackgroundVideo.tsx            # Seamless video background with fade loop
+│   │   ├── AppleChipArchitecture.tsx      # Medallion lakehouse diagram & tech grid
+│   │   ├── ApplePerformanceSlider.tsx     # Interactive speedup slider (75% reduction)
+│   │   ├── AppleBadgesGallery.tsx         # 6 Certified developer badges gallery
+│   │   ├── AppleCapabilities.tsx          # 6 Platform cards with spec modals
+│   │   ├── AppleExperienceTimeline.tsx    # Client milestones & switch reasons
+│   │   ├── AppleIndustries.tsx            # 6 Industry verticals
+│   │   ├── AppleProcess.tsx               # 5-Phase delivery methodology
+│   │   ├── AppleTechSpecs.tsx             # Technical spec matrix & engagement models
+│   │   ├── AppleFAQ.tsx                   # 8 Enterprise accordion questions
+│   │   ├── AppleContact.tsx               # WhatsApp & project brief submission
+│   │   ├── AppleFooter.tsx                # 4-Column footer with floating bottom pill bar
+│   │   └── PrivacyPolicy.tsx              # Legal privacy statement
+│   │
+│   ├── utils/
+│   │   └── assets.ts                      # Base path resolver for assets
+│   ├── App.tsx                            # Root application & theme state
+│   ├── index.css                          # Apple design system & custom scrollbars
+│   └── main.tsx                           # React 19 entry point
 │
-├── .github/
-│   └── workflows/
-│       └── static.yml          # GitHub Actions: build + deploy to Pages
+├── .github/workflows/
+│   └── static.yml                         # Automated GitHub Pages CI/CD
 │
-├── index.html                  # HTML shell with SEO meta + JSON-LD
-├── vite.config.ts              # Vite config (base: /About-us/)
-├── tsconfig.json               # TypeScript config
-└── package.json                # Dependencies
+├── index.html                             # SEO meta, OpenGraph, JSON-LD schema
+└── vite.config.ts                         # Vite configuration (base: /About-us/)
 ```
 
 ---
 
-## Getting Started
+## 💻 Local Development
 
 ```bash
 # Install dependencies
 npm install
 
-# Start dev server
+# Start development server
 npm run dev
 
 # Production build
 npm run build
 
-# Preview production build locally
+# Preview build locally
 npm run preview
 ```
 
 ---
 
-## Deployment
+## 🌐 Deployment to GitHub Pages
 
-The site auto-deploys to GitHub Pages on every push to `main` via GitHub Actions (`.github/workflows/static.yml`).
-
-The workflow:
-1. Checks out the code
-2. Installs Node 20 + npm dependencies
-3. Runs `npm run build` (TypeScript compile + Vite bundle)
-4. Uploads the `dist/` folder to GitHub Pages
+Every commit pushed to the `main` branch automatically triggers `.github/workflows/static.yml`, building the Vite static distribution and publishing it live to GitHub Pages.
 
 ---
 
-## Pages / Sections
-
-| # | Section | ID |
-|---|---|---|
-| 1 | Hero | `#hero` |
-| 2 | Stats | `#stats` |
-| 3 | Certifications | `#certified-teams` |
-| 4 | Capabilities | `#services` |
-| 5 | Delivery Process | `#process` |
-| 6 | Pricing | `#pricing` |
-| 7 | Why BITA | `#why-bita` |
-| 8 | Industries | `#industries` |
-| 9 | Testimonials | — |
-| 10 | About | `#about` |
-| 11 | FAQ | `#faq` |
-| 12 | Contact | `#contact` |
-
----
-
-## Contact
+## 📬 Contact & Engagements
 
 - 📧 [contact@bitacloudinfo.tech](mailto:contact@bitacloudinfo.tech)
 - 💬 [WhatsApp: +91 89822 96014](https://wa.me/918982296014)
 - 🔗 [LinkedIn](https://www.linkedin.com/company/bita-cloud-info-tech)
-
----
 
 © 2026 BITA CLOUD INFO TECH. All rights reserved.
