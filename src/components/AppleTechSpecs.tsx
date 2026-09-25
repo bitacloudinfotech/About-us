@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
-import { Layers, Check, Calculator, Cpu, Database, Shield, Star, ArrowUpRight } from 'lucide-react';
+import React from 'react';
+import { Layers, Cpu, Database, Shield } from 'lucide-react';
 
-interface AppleTechSpecsProps {
-  onSelectTier?: (tierName: string) => void;
-}
-
-export const AppleTechSpecs: React.FC<AppleTechSpecsProps> = ({ onSelectTier }) => {
-  const [selectedEngagement, setSelectedEngagement] = useState<string>('retainer');
-
+export const AppleTechSpecs: React.FC = () => {
   const specCategories = [
     {
       id: 'data',
@@ -58,42 +52,6 @@ export const AppleTechSpecs: React.FC<AppleTechSpecsProps> = ({ onSelectTier }) 
     },
   ];
 
-  const engagementTiers = [
-    {
-      id: 'sprint',
-      name: 'Fixed-Scope Sprint',
-      price: 'From $15,000',
-      duration: '2 – 6 Weeks',
-      deliverables:
-        'Well-scoped projects: specific ADF pipeline, Power BI suite, dbt transformation layer, or Fabric lakehouse build. Fixed SOW, no cost surprises.',
-      highlight: false,
-    },
-    {
-      id: 'retainer',
-      name: 'Monthly Dedicated Retainer',
-      price: 'From $8,000 / mo',
-      duration: 'Full-Time Capacity',
-      deliverables:
-        'Named senior certified Azure data engineer embedded with your team (160 hrs/mo). Direct Slack & WhatsApp access. Cancel anytime — no lock-in.',
-      highlight: true,
-      badge: 'Most Popular',
-    },
-    {
-      id: 'program',
-      name: 'Enterprise Transformation',
-      price: 'From $120,000',
-      duration: 'Multi-Quarter Roadmap',
-      deliverables:
-        'Full delivery team (3–5 certified engineers) with dedicated program manager, lakehouse architecture, governance, and executive C-suite reporting.',
-      highlight: false,
-    },
-  ];
-
-  const handleSelect = (id: string, name: string) => {
-    setSelectedEngagement(id);
-    if (onSelectTier) onSelectTier(name);
-  };
-
   return (
     <section id="specs" className="relative py-24 px-6 max-w-7xl mx-auto space-y-16">
       {/* Header */}
@@ -107,7 +65,7 @@ export const AppleTechSpecs: React.FC<AppleTechSpecsProps> = ({ onSelectTier }) 
         </h2>
         <p className="text-[#86868b] text-base sm:text-lg font-medium">
           Comprehensive breakdown of data platform architecture, AI frameworks, governance standards,
-          and transparent engagement models.
+          and enterprise delivery capabilities.
         </p>
       </div>
 
@@ -135,65 +93,6 @@ export const AppleTechSpecs: React.FC<AppleTechSpecsProps> = ({ onSelectTier }) 
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Engagement Options Selector */}
-      <div id="pricing" className="apple-glass rounded-3xl p-8 md:p-12 border border-white/10 space-y-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
-          <div className="space-y-1">
-            <div className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-              <Calculator className="w-5 h-5 text-cyan-400" />
-              <span>Transparent Engagement Models</span>
-            </div>
-            <p className="text-xs text-[#86868b]">
-              Select an engagement model to explore deliverables, team capacity, and scope.
-            </p>
-          </div>
-
-          <a
-            href="#contact"
-            className="px-6 py-2.5 rounded-full bg-white text-black text-xs font-semibold hover:bg-white/90 transition-all shadow-lg flex items-center gap-1.5 w-fit"
-          >
-            <span>Book Discovery Call</span>
-            <ArrowUpRight size={13} />
-          </a>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {engagementTiers.map((tier) => (
-            <button
-              key={tier.id}
-              onClick={() => handleSelect(tier.id, tier.name)}
-              className={`text-left p-7 rounded-2xl apple-glass border transition-all cursor-pointer relative ${
-                selectedEngagement === tier.id
-                  ? 'border-cyan-400 bg-cyan-500/10 shadow-[0_0_30px_rgba(0,229,255,0.2)]'
-                  : 'border-white/10 hover:border-white/30'
-              }`}
-            >
-              {tier.badge && (
-                <div className="absolute -top-3 left-6">
-                  <span className="flex items-center gap-1 text-[10px] font-bold px-3 py-0.5 rounded-full bg-cyan-400 text-black shadow-md uppercase tracking-wider">
-                    <Star size={10} fill="currentColor" />
-                    {tier.badge}
-                  </span>
-                </div>
-              )}
-
-              <div className="flex items-center justify-between mb-3 pt-1">
-                <span className="px-2.5 py-0.5 rounded-full apple-glass text-[10px] font-semibold text-cyan-300 uppercase tracking-wider">
-                  {tier.duration}
-                </span>
-                {selectedEngagement === tier.id && <Check className="w-4 h-4 text-cyan-400" />}
-              </div>
-
-              <h4 className="text-lg font-bold text-white mb-1">{tier.name}</h4>
-              <div className="text-2xl font-black text-white tracking-tight mb-3">
-                {tier.price}
-              </div>
-              <p className="text-xs text-[#86868b] leading-relaxed">{tier.deliverables}</p>
-            </button>
-          ))}
-        </div>
       </div>
     </section>
   );

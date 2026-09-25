@@ -94,7 +94,6 @@ export const AppleNavbar: React.FC<AppleNavbarProps> = ({
             { id: 'badges', label: 'Certifications' },
             { id: 'specs', label: 'Capabilities' },
             { id: 'experience', label: 'Milestones' },
-            { id: 'pricing', label: 'Engagement' },
             { id: 'contact', label: 'Contact' },
           ].map((link) => (
             <button
@@ -180,7 +179,6 @@ export const AppleNavbar: React.FC<AppleNavbarProps> = ({
               { id: 'badges', label: '100% Certified Badges' },
               { id: 'specs', label: 'Technical Specifications' },
               { id: 'experience', label: 'Client Milestones' },
-              { id: 'pricing', label: 'Engagement Models' },
               { id: 'contact', label: 'Contact Leadership' },
             ].map((link) => (
               <button

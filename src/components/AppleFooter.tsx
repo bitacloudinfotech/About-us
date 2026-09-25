@@ -63,23 +63,8 @@ export const AppleFooter: React.FC<AppleFooterProps> = ({ onBackToTop, onOpenPri
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-semibold text-white tracking-wide">Engagement &amp; Verticals</h4>
+            <h4 className="font-semibold text-white tracking-wide">Enterprise Verticals</h4>
             <ul className="space-y-2">
-              <li>
-                <a href="#pricing" className="hover:text-white transition-colors">
-                  Fixed-Scope Sprint ($15k+)
-                </a>
-              </li>
-              <li>
-                <a href="#pricing" className="hover:text-white transition-colors">
-                  Monthly Dedicated Retainer
-                </a>
-              </li>
-              <li>
-                <a href="#pricing" className="hover:text-white transition-colors">
-                  Enterprise Transformation
-                </a>
-              </li>
               <li>
                 <a href="#industries" className="hover:text-white transition-colors">
                   Healthcare &amp; Life Sciences
@@ -92,7 +77,22 @@ export const AppleFooter: React.FC<AppleFooterProps> = ({ onBackToTop, onOpenPri
               </li>
               <li>
                 <a href="#industries" className="hover:text-white transition-colors">
+                  Retail &amp; Consumer Goods
+                </a>
+              </li>
+              <li>
+                <a href="#industries" className="hover:text-white transition-colors">
                   Industrial &amp; Manufacturing
+                </a>
+              </li>
+              <li>
+                <a href="#process" className="hover:text-white transition-colors">
+                  5-Phase Delivery Process
+                </a>
+              </li>
+              <li>
+                <a href="#experience" className="hover:text-white transition-colors">
+                  Client Milestones &amp; Proof
                 </a>
               </li>
             </ul>
